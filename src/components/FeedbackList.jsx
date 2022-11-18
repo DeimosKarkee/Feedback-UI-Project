@@ -1,4 +1,5 @@
 import React from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import FeedbackItem from "./FeedbackItem";
 
 function FeedbackList({ feedback, handelDelete }) {
@@ -8,9 +9,22 @@ function FeedbackList({ feedback, handelDelete }) {
 
   return (
     <div className="feedback-list">
-      {feedback.map((item) => (
-        <FeedbackItem key={item.id} item={item} handelDelete={handelDelete} />
-      ))}
+      <AnimatePresence>
+        {feedback.map((item) => (
+          <motion.div
+            key={item.id}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <FeedbackItem
+              key={item.id}
+              item={item}
+              handelDelete={handelDelete}
+            />
+          </motion.div>
+        ))}
+      </AnimatePresence>
     </div>
   );
 }
